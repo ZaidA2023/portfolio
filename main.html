@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Infinite Scroll Portfolio</title>
+  <style>
+    
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      background: #2C3930;
+    }
+    /* Fixed index on the left */
+    #index {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 200px;
+      height: 100vh;
+      overflow-y: auto;
+      background: #2C3930;
+      padding: 20px;
+    }
+    #index h2 {
+      font-size: 1.2em;
+      margin-top: 0;
+      color: #DCD7C9
+    }
+    #index ul {
+      list-style: none;
+      padding: 0;
+    }
+    #index li {
+      margin-bottom: 10px;
+    }
+    #index a {
+      text-decoration: none;
+      font-weight: bold;
+      color: #DCD7C9;
+    }
+    #index a:hover {
+      text-decoration: underline;
+    }
+    /* Portfolio container with a left margin to accommodate the index */
+    #portfolio {
+      margin-left: 220px;
+      padding: 20px;
+    }
+    .project {
+      margin-bottom: 40px;
+      padding: 20px;
+      background: #A27B5C;
+      border: 1px solid black;
+      border-radius: 4px;
+    }
+    .active-index {
+      font-weight:300;
+      color: #A27B5C !important;
+      padding: 5px;
+      border-radius: 4px;
+      transition: background 0.3s ease;
+    }
+
+    .project h3 {
+      margin-top: 0;
+    }
+    /* Sentinel for the infinite scroll */
+    #sentinel {
+      height: 20px;
+    }
+    /* Enable smooth scrolling for anchor jumps */
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+<body>
+  <!-- Index Navigation -->
+  <nav id="index">
+    <h2>Projects</h2>
+    <ul id="indexList">
+      <!-- Index items will be dynamically appended here -->
+    </ul>
+  </nav>
+
+  <!-- Main Portfolio Container -->
+  <div id="portfolio">
+    <!-- Portfolio items will be dynamically loaded here -->
+  </div>
+
+  <!-- Sentinel Element for Infinite Scroll -->
+  <div id="sentinel"></div>
+
+  <script>
+    let projectCount = 0;
+    const totalProjects = 30;      // Total projects to simulate
+    const projectsPerLoad = 5;     // Number of projects per load
+
+    const portfolioContainer = document.getElementById('portfolio');
+    const indexList = document.getElementById('indexList');
+    const sentinel = document.getElementById('sentinel');
+
+    // Function to load and display projects
+    function loadProjects() {
+      for (let i = 0; i < projectsPerLoad; i++) {
+        if (projectCount >= totalProjects) {
+          // If all projects are loaded, stop observing the sentinel.
+          observer.disconnect();
+          return;
+        }
+        projectCount++;
+
+        // Create a new project element
+        const projectDiv = document.createElement('div');
+        projectDiv.classList.add('project');
+        projectDiv.id = 'project-' + projectCount;
+
+        // Add content to the project
+        projectDiv.innerHTML = `
+          <h3>Project ${projectCount}</h3>
+          <p>blah blah blah blahblah blah blah blahblah blah blah blahblah blah blah blah
+            blah blah blah blahblah blah blah blahblah blah blah blahblah blah blah blah
+            blah blah blah blahblah blah blah blahblah blah blah blahblah blah blah blah
+            blah blah blah blahblah blah blah blahblah blah blah blah
+            blah blah blah blahblah blah blah blahblah blah blah blahblah blah blah blah
+            blah blah blah blahblah blah blah blahblah blah blah blahblah blah blah blah
+            blah blah blah blahblah blah blah blahblah blah blah blahblah blah blah blah
+            blah blah blah blahblah blah blah blahblah blah blah blahblah blah blah blah
+            blah blah blah blahblah blah blah blahblah blah blah blah
+            blah blah blah blahblah blah blah blahblah blah blah blahblah blah blah blah
+            blah blah blah blahblah blah blah blahblah blah blah blahblah blah blah blah
+            blah blah blah blahblah blah blah blahblah blah blah blahblah blah blah blah
+            blah blah blah blahblah blah blah blahblah blah blah blahblah blah blah blah
+            blah blah blah blahblah blah blah blahblah blah blah blah
+            blah blah blah blahblah blah blah blahblah blah blah blahblah blah blah blah
+            blah blah blah blahblah blah blah blahblah blah blah blahblah blah blah blah
+            blah blah blah blahblah blah blah blahblah blah blah blahblah blah blah blah
+            blah blah blah blahblah blah blah blahblah blah blah blahblah blah blah blah
+            blah blah blah blahblah blah blah blahblah blah blah blah
+            blah blah blah blahblah blah blah blahblah blah blah blahblah blah blah blah</p>
+        `;
+
+        // Append the project to the portfolio container
+        portfolioContainer.appendChild(projectDiv);
+
+        // Create or update the corresponding index entry
+        const li = document.createElement('li');
+        const link = document.createElement('a');
+        link.href = '#' + projectDiv.id;
+        link.textContent = 'Project ' + projectCount;
+        li.appendChild(link);
+        indexList.appendChild(li);
+      }
+    }
+function updateActiveIndex() {
+  const projects = document.querySelectorAll('.project');
+  let activeIndex = 0;
+
+  for(let i = projects.length - 1; i >= 0; i--) {
+    const proj = projects[i];
+    const rect = proj.getBoundingClientRect();
+    if (rect.bottom >= 50) { // && rect.bottom <= window.innerHeight) {
+      activeIndex = i;
+    }
+  }
+
+  // Remove existing highlights
+  document.querySelectorAll('#indexList li a').forEach(link => {
+    link.classList.remove('active-index');
+  });
+
+  // Highlight the active project in the index
+  const activeLink = document.querySelector(`#indexList li:nth-child(${activeIndex + 1}) a`);
+  if (activeLink) {
+    activeLink.classList.add('active-index');
+  }
+}
+
+  // Attach scroll listener
+  window.addEventListener('scroll', updateActiveIndex);
+
+    // Set up Intersection Observer to detect when the sentinel is visible
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          loadProjects();
+        }
+      });
+    });
+
+    // Begin observing the sentinel
+    observer.observe(sentinel);
+  </script>
+</body>
+</html>
