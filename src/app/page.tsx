@@ -1,101 +1,150 @@
-import Image from "next/image";
+import { useEffect, useState, useRef } from "react";
 
-export default function Home() {
+export default function Portfolio() {
+  const [projectCount, setProjectCount] = useState(0);
+  const totalProjects = 30;
+  const projectsPerLoad = 5;
+  const portfolioContainer = useRef<HTMLDivElement>(null);
+  const indexList = useRef<HTMLUListElement>(null);
+  const sentinel = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const loadProjects = () => {
+      if (!portfolioContainer.current || !indexList.current) return;
+
+      for (let i = 0; i < projectsPerLoad; i++) {
+        if (projectCount >= totalProjects) return;
+        setProjectCount((prev) => prev + 1);
+
+        // Create project
+        const projectDiv = document.createElement("div");
+        projectDiv.classList.add("project");
+        projectDiv.id = `project-${projectCount + 1}`;
+        projectDiv.innerHTML = `
+          <h3>Project ${projectCount + 1}</h3>
+          <p>Sample description for Project ${projectCount + 1}.</p>
+        `;
+
+        // Append to portfolio
+        portfolioContainer.current.appendChild(projectDiv);
+
+        // Create index entry
+        const li = document.createElement("li");
+        const link = document.createElement("a");
+        link.href = `#project-${projectCount + 1}`;
+        link.textContent = `Project ${projectCount + 1}`;
+        li.appendChild(link);
+        indexList.current.appendChild(li);
+      }
+    };
+
+    // Infinite Scroll Observer
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        loadProjects();
+      }
+    });
+
+    if (sentinel.current) observer.observe(sentinel.current);
+
+    return () => observer.disconnect();
+  }, [projectCount]);
+
+  useEffect(() => {
+    const updateActiveIndex = () => {
+      const projects = document.querySelectorAll(".project");
+      let activeIndex = 0;
+
+      projects.forEach((proj, i) => {
+        const rect = proj.getBoundingClientRect();
+        if (rect.bottom >= 50) activeIndex = i;
+      });
+
+      document.querySelectorAll("#indexList li a").forEach((link) => {
+        link.classList.remove("active-index");
+      });
+
+      const activeLink = document.querySelector(`#indexList li:nth-child(${activeIndex + 1}) a`);
+      if (activeLink) activeLink.classList.add("active-index");
+    };
+
+    window.addEventListener("scroll", updateActiveIndex);
+    return () => window.removeEventListener("scroll", updateActiveIndex);
+  }, []);
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div>
+      {/* Fixed Index Navigation */}
+      <nav id="index">
+        <h2>Projects</h2>
+        <ul id="indexList" ref={indexList}></ul>
+      </nav>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      {/* Portfolio Container */}
+      <div id="portfolio" ref={portfolioContainer}></div>
+
+      {/* Sentinel for Infinite Scroll */}
+      <div id="sentinel" ref={sentinel}></div>
+
+      {/* Styles */}
+      <style jsx>{`
+        body {
+          margin: 0;
+          font-family: Arial, sans-serif;
+          background: #2c3930;
+        }
+        #index {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 200px;
+          height: 100vh;
+          overflow-y: auto;
+          background: #2c3930;
+          padding: 20px;
+        }
+        #index h2 {
+          color: #dcd7c9;
+        }
+        #index ul {
+          list-style: none;
+          padding: 0;
+        }
+        #index li {
+          margin-bottom: 10px;
+        }
+        #index a {
+          text-decoration: none;
+          font-weight: bold;
+          color: #dcd7c9;
+        }
+        #index a:hover {
+          text-decoration: underline;
+        }
+        .active-index {
+          font-weight: 300;
+          color: #a27b5c !important;
+          padding: 5px;
+          border-radius: 4px;
+          transition: background 0.3s ease;
+        }
+        #portfolio {
+          margin-left: 220px;
+          padding: 20px;
+        }
+        .project {
+          margin-bottom: 40px;
+          padding: 20px;
+          background: #a27b5c;
+          border-radius: 4px;
+        }
+        .project h3 {
+          margin-top: 0;
+        }
+        #sentinel {
+          height: 20px;
+        }
+      `}</style>
     </div>
   );
 }
