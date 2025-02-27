@@ -11,7 +11,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #2C3930;
+    --background: #000000;
     --foreground: #ededed;
   }
 }
@@ -41,31 +41,31 @@ h1 {
 }
 
 #hero {
-  background-color: #2C3930;
+  background-color: #000000;
   color: #DCD7C9;
 }
 #projects {
-  background-color: #2C3930;
+  background-color: #000000;
   color: #DCD7C9;
 }
 #about {
-  background-color: #2C3930;
+  background-color: #000000;
   color: #DCD7C9;
 }
 #contact {
-  background-color: #2C3930;
+  background-color: #000000;
   color: #DCD7C9;
 }
 
 #title {
-  background-color: #2C3930 !important;
+  background-color: #000000 !important;
 }
 
 #text {
-  color: #A27B5C;
+  color: #ECEBDE;
 }
 #text2 {
-  color: #DCD7C9;
+  color: #ECEBDE;
 }
 .wrapper {
   margin: 0 auto;

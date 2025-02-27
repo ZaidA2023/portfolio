@@ -56,7 +56,6 @@ export default function InfinitePortfolio() {
           
           </div>
           <div className="absolute bottom-24 w-full text-center">
-            <p className="text-3xl text-white"id="text2">Scroll</p>
             <div className="arrow absolute bottom-0">
               <span></span>
               <span></span>
@@ -75,7 +74,7 @@ export default function InfinitePortfolio() {
             animate={{ x: 0 }}
             exit={{ x: '-100%' }}
             transition={{ type: 'spring', stiffness: 100 }}
-            className="fixed left-0 top-0 h-screen w-1/6 bg-[#A27B5C] backdrop-blur-lg z-40"
+            className="fixed left-0 top-0 h-screen w-1/6 bg-[#000a00] backdrop-blur-lg z-40"
           >
             <div className="p-6 h-full flex flex-col">
 
