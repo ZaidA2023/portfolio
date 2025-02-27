@@ -37,3 +37,16 @@ main {
 h1 {
   white-space: "pre-line"
 }
+
+#hero {
+  background-color: #171717;
+}
+#projects {
+  background-color: #171717;
+}
+#about {
+  background-color: #171717;
+}
+#contact {
+  background-color: #171717;
+}

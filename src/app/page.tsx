@@ -24,11 +24,10 @@ export default function InfinitePortfolio() {
       setShowTitle(shouldShowTitle);
       
       // Update active section
-      const scrollPos = window.scrollY + window.innerHeight / 2;
       document.querySelectorAll('section').forEach(section => {
         const top = section.offsetTop;
         const bottom = top + section.offsetHeight;
-        if (scrollPos >= top && scrollPos <= bottom) {
+        if (bottom - (section.offsetHeight * 0.4) <= scrollY) {
           setActiveSection(section.id);
         }
       });
@@ -84,8 +83,8 @@ export default function InfinitePortfolio() {
                     }`}
                   >
                     {section.id === 'hero' && <UserCircleIcon className="w-6 h-6" />}
-                    {section.id === 'projects' && <CodeBracketIcon className="w-6 h-6" />}
                     {section.id === 'about' && <UserCircleIcon className="w-6 h-6" />}
+                    {section.id === 'projects' && <CodeBracketIcon className="w-6 h-6" />}
                     {section.id === 'contact' && <CommandLineIcon className="w-6 h-6" />}
                     <motion.span
                       className="text-sm font-medium"
@@ -105,13 +104,13 @@ export default function InfinitePortfolio() {
         className="min-h-screen bg-gray-50 sticky top-0"
         style={{
           scale: !showTitle ? 0.8 : 1,
-          //marginLeft: !showTitle ? '256px' : '0', // Match sidebar width
+          marginLeft: !showTitle ? '-57px' : '0', // Match sidebar width
           transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
         }}
       >
         {/* Hero Section */}
         <section id="hero" className="h-screen flex flex-col justify-center items-center text-center px-4">
-          <h1 className="text-5xl font-bold mb-4">Welcome to My Portfolio</h1>
+          <h1 className="text-5xl font-bold mb-4"></h1>
           <p className="text-xl text-gray-600">Scroll to explore my work</p>
         </section>
 
