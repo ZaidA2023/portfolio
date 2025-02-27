@@ -4,11 +4,11 @@ import '@splidejs/splide/dist/css/splide.min.css';
 const Slideshow = () => {
   const slides = [
     { id: 1, img: '/images/Mootaz.jpg' },
-    { id: 2, img: '/images/Ray_reflect.png' },
+    { id: 2, img: '/images/Ray_reflect.jpg' },
     { id: 3, img: '/images/Mootaz.jpg' },
-    { id: 4, img: '/images/Ray_reflect.png' },
+    { id: 4, img: '/images/Ray_reflect.jpg' },
     { id: 5, img: '/images/Mootaz.jpg' },
-    { id: 6, img: '/images/Ray_reflect.png' },
+    { id: 6, img: '/images/Ray_reflect.jpg' },
   ];
 
   
