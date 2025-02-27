@@ -11,7 +11,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #000000;
+    --background: #2C3930;
     --foreground: #ededed;
   }
 }
@@ -41,18 +41,32 @@ h1 {
 }
 
 #hero {
-  background-color: black;
+  background-color: #2C3930;
+  color: #DCD7C9;
 }
 #projects {
-  background-color: black;
+  background-color: #2C3930;
+  color: #DCD7C9;
 }
 #about {
-  background-color: black;
+  background-color: #2C3930;
+  color: #DCD7C9;
 }
 #contact {
-  background-color: black;
+  background-color: #2C3930;
+  color: #DCD7C9;
 }
 
+#title {
+  background-color: #2C3930 !important;
+}
+
+#text {
+  color: #A27B5C;
+}
+#text2 {
+  color: #DCD7C9;
+}
 .wrapper {
   margin: 0 auto;
 }
@@ -105,8 +119,8 @@ h1 {
     display: block;
     width: 1.5vw;
     height: 1.5vw;
-    border-bottom: 5px solid white;
-    border-right: 5px solid white;
+    border-bottom: 5px solid #4A5C50;
+    border-right: 5px solid #4A5C50;
     transform: rotate(45deg);
     animation: animate 2s infinite;
 }

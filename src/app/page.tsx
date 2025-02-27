@@ -47,15 +47,16 @@ export default function InfinitePortfolio() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black flex items-center justify-center z-50"
+            className="fixed inset-0 flex items-center justify-center z-50"
+            id = "title"
           >
           <div className="flex flex-col items-center">
-          <div className="text-6xl font-bold text-white">Zaid Albustami</div>
-          <p className="text-2xl text-white mt-2">Computer Science @ UT Austin</p>
+          <div className="text-6xl font-bold text-white" id="text">Zaid Albustami</div>
+          <p className="text-2xl text-white mt-2"id="text2">Computer Science @ UT Austin</p>
           
           </div>
           <div className="absolute bottom-24 w-full text-center">
-            <p className="text-3xl text-white">Scroll</p>
+            <p className="text-3xl text-white"id="text2">Scroll</p>
             <div className="arrow absolute bottom-0">
               <span></span>
               <span></span>
@@ -74,7 +75,7 @@ export default function InfinitePortfolio() {
             animate={{ x: 0 }}
             exit={{ x: '-100%' }}
             transition={{ type: 'spring', stiffness: 100 }}
-            className="fixed left-0 top-0 h-screen w-1/6 bg-black/90 backdrop-blur-lg z-40"
+            className="fixed left-0 top-0 h-screen w-1/6 bg-[#A27B5C] backdrop-blur-lg z-40"
           >
             <div className="p-6 h-full flex flex-col">
 
@@ -86,8 +87,8 @@ export default function InfinitePortfolio() {
                     href={`#${section.id}`}
                     className={`flex items-center gap-3 p-3 rounded-lg transition-colors ${
                       activeSection === section.id
-                        ? 'bg-white/10 text-white'
-                        : 'text-gray-400 hover:bg-white/5'
+                        ? 'bg-[#DCD7C9]/10 text-white'
+                        : 'text-[#DCD7C9] hover:bg-[#DCD7C9]/5'
                     }`}
                   >
                     {section.id === 'hero' && <UserCircleIcon className="w-6 h-6" />}
