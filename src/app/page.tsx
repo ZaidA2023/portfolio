@@ -2,12 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CodeBracketIcon, CommandLineIcon, UserCircleIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { CodeBracketIcon, CommandLineIcon, UserCircleIcon } from '@heroicons/react/24/outline';
 
 export default function InfinitePortfolio() {
   const [showTitle, setShowTitle] = useState(true);
   const [activeSection, setActiveSection] = useState('');
-  const [isHovered, setIsHovered] = useState(false);
 
   // Sections configuration
   const sections = [
@@ -65,8 +64,6 @@ export default function InfinitePortfolio() {
             exit={{ x: '-100%' }}
             transition={{ type: 'spring', stiffness: 100 }}
             className="fixed left-0 top-0 h-screen w-64 bg-black/90 backdrop-blur-lg z-40"
-            onHoverStart={() => setIsHovered(true)}
-            onHoverEnd={() => setIsHovered(false)}
           >
             <div className="p-6 h-full flex flex-col">
 
