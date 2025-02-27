@@ -19,3 +19,21 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+html {
+  scroll-behavior: smooth;
+}
+
+section {
+  scroll-snap-align: start;
+  color: black;
+}
+
+main {
+  transform-origin: center right;
+  transition-property: scale, margin-left;
+  transition-duration: 0.3s;
+}
+
+h1 {
+  white-space: "pre-line"
+}
