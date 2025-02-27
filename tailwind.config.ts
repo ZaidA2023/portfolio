@@ -12,6 +12,15 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      transitionTimingFunction: {
+        'out-expo': 'cubic-bezier(0.19, 1, 0.22, 1)',
+      },
+      keyframes: {
+        swipe: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-100%)' },
+        }
+      }
     },
   },
   plugins: [],
