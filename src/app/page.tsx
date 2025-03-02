@@ -4,17 +4,30 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CodeBracketIcon, CommandLineIcon, UserCircleIcon } from '@heroicons/react/24/outline';
 import Slideshow from "./Slideshow"
-//import { Splide, SplideSlide } from '@splidejs/react-splide';
+import { DiGithubBadge } from "react-icons/di";
+import { FaLinkedinIn } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
 
 export default function InfinitePortfolio() {
   const [showTitle, setShowTitle] = useState(true);
   const [activeSection, setActiveSection] = useState('');
+  const [showEmailCopied, setShowEmailCopied] = useState(false);
+
+  const handleEmailClick = () => {
+    navigator.clipboard.writeText('your-email@example.com')
+      .then(() => {
+        setShowEmailCopied(true);
+        setTimeout(() => setShowEmailCopied(false), 2000);
+      })
+      .catch(err => {
+        console.error('Failed to copy email:', err);
+      });
+  };
 
   // Sections configuration
   const sections = [
     { id: 'hero', label: 'Home' },
     { id: 'projects', label: 'Projects' },
-    { id: 'about', label: 'About Me' },
     { id: 'contact', label: 'Contact' }
   ];
 
@@ -23,15 +36,18 @@ export default function InfinitePortfolio() {
     const handleScroll = () => {
       const shouldShowTitle = window.scrollY < 50; // Adjust threshold as needed
       setShowTitle(shouldShowTitle);
+      // if(window.scrollY > 50) {
+      //   window.scrollBy(0, 100);
+      // }
+      const scrollPosition = window.scrollY + window.innerHeight / 4;
+      const sections = Array.from(document.querySelectorAll('section'));
       
-      // Update active section
-      document.querySelectorAll('section').forEach(section => {
+      const active = sections.find(section => {
         const top = section.offsetTop;
         const bottom = top + section.offsetHeight;
-        if (bottom - (section.offsetHeight * 0.4) <= scrollY) {
-          setActiveSection(section.id);
-        }
+        return scrollPosition >= top && scrollPosition < bottom;
       });
+      if(active) setActiveSection(active.id);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -39,7 +55,7 @@ export default function InfinitePortfolio() {
   }, []);
 
   return (
-    <div className="relative h-[500vh]">
+    <div className="relative h-[300vh]">
       {/* Title Screen */}
       <AnimatePresence>
         {showTitle && (
@@ -62,10 +78,41 @@ export default function InfinitePortfolio() {
               <span></span>
           </div>
           </div>
+          <button className="absolute left-8 absolute bottom-5">
+            <a 
+              href="https://www.linkedin.com/in/zaidalbustami/" 
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+            <FaLinkedinIn className="w-8 h-8" />
+            </a>
+          </button>
+          <button className="absolute left-[4.4rem] absolute bottom-[1.1rem]">
+            <a 
+              href="https://github.com/ZaidA2023" 
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+            <DiGithubBadge className="w-9 h-9" />
+            </a>
+          </button>
+          <button className="absolute left-28 absolute bottom-[1.1rem]"
+                  onClick={handleEmailClick}>
+              <MdEmail className="w-8 h-8" />
+          </button>
+          {showEmailCopied && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="absolute left-20 bottom-14 bg-white text-black px-3 py-1 rounded-md text-sm"
+          >
+            Email copied!
+          </motion.div>
+      )}
           </motion.div>
         )}
       </AnimatePresence>
-
       {/* Full-height Sidebar */}
       <AnimatePresence>
         {!showTitle && (
@@ -91,7 +138,6 @@ export default function InfinitePortfolio() {
                     }`}
                   >
                     {section.id === 'hero' && <UserCircleIcon className="w-6 h-6" />}
-                    {section.id === 'about' && <UserCircleIcon className="w-6 h-6" />}
                     {section.id === 'projects' && <CodeBracketIcon className="w-6 h-6" />}
                     {section.id === 'contact' && <CommandLineIcon className="w-6 h-6" />}
                     <motion.span
@@ -128,19 +174,10 @@ export default function InfinitePortfolio() {
           </div>
         </section>
 
-        {/* About Section */}
-        <section id="about" className="h-screen flex items-center justify-center">
-          <div className="max-w-4xl mx-auto px-4">
-            <h2 className="text-3xl font-bold mb-8">About Me</h2>
-            {/* Add your about content here */}
-          </div>
-        </section>
-
         {/* Contact Section */}
         <section id="contact" className="h-screen flex items-center justify-center bg-white text-white">
           <div className="text-center">
             <h2 className="text-4xl font-bold mb-4">Let's Connect!</h2>
-            <p className="text-xl">Keep scrolling to loop back</p>
           </div>
         </section>
       </motion.main>
