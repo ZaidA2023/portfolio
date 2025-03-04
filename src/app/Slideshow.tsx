@@ -3,17 +3,15 @@ import '@splidejs/splide/dist/css/splide.min.css';
 
 const Slideshow = () => {
   const slides = [
-    { id: 1, img: '/images/Mootaz.jpg' },
-    { id: 2, img: '/images/Ray.jpg' },
-    { id: 3, img: '/images/Mootaz.jpg' },
-    { id: 4, img: '/images/Ray.jpg' },
-    { id: 5, img: '/images/Mootaz.jpg' },
-    { id: 6, img: '/images/Ray.jpg' },
+    { id: 1, img: '/images/Jerry.png' },
+    { id: 2, img: '/images/Ray.png' },
+    { id: 3, img: '/images/flaps.png' },
+    { id: 4, img: '/images/capsule.png' },
   ];
 
   
   return (
-    <div className="wrapper w-full">
+    <div className="wrapper w-full bg-transparent">
       <Splide
         options={{
           type: 'loop',

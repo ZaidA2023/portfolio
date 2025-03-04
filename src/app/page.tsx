@@ -30,15 +30,31 @@ export default function InfinitePortfolio() {
     { id: 'projects', label: 'Projects' },
     { id: 'contact', label: 'Contact' }
   ];
-
+  const projects = [
+    { 
+      id: 1, 
+      title: 'AI Chat Interface', 
+      description: 'Developed a conversational AI using React and TensorFlow.js',
+      tech: 'React · NLP · TensorFlow'
+    },
+    { 
+      id: 2, 
+      title: 'E-Commerce Platform', 
+      description: 'Full-stack shopping platform with Node.js and Stripe integration',
+      tech: 'Next.js · Node · MongoDB'
+    },
+    { 
+      id: 3, 
+      title: 'AR Navigation App', 
+      description: 'Mobile AR navigation system using Unity and ARKit',
+      tech: 'Unity · C# · ARKit'
+    },
+  ];
   // Track scroll position
   useEffect(() => {
     const handleScroll = () => {
       const shouldShowTitle = window.scrollY < 50; // Adjust threshold as needed
       setShowTitle(shouldShowTitle);
-      // if(window.scrollY > 50) {
-      //   window.scrollBy(0, 100);
-      // }
       const scrollPosition = window.scrollY + window.innerHeight / 4;
       const sections = Array.from(document.querySelectorAll('section'));
       
@@ -153,7 +169,6 @@ export default function InfinitePortfolio() {
         )}
       </AnimatePresence>
 
-      {/* Main Content */}
       <motion.main
         className="min-h-screen bg-gray-50 sticky top-0 z-30"
         style={{
@@ -161,20 +176,55 @@ export default function InfinitePortfolio() {
           transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
         }}
       >
-        {/* Hero Section */}
         <section id="hero" className="h-screen flex flex-col justify-center items-center text-center px-4 w-full">
           <Slideshow></Slideshow>
         </section>
 
         {/* Projects Section */}
-        <section id="projects" className="h-screen flex items-center justify-center bg-white">
-          <div className="max-w-6xl mx-auto px-4">
-            <h2 className="text-3xl font-bold mb-8">Projects</h2>
-            {/* Add your projects here */}
+        <section id="projects" className="h-screen flex bg-white">
+        <div className="max-w-6xl mx-auto px-4 w-full py-20">
+    <motion.h2 
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ 
+        opacity: activeSection === 'projects' ? 1 : 0,
+        y: activeSection === 'projects' ? 0 : 20
+      }}
+      className="text-4xl font-bold mb-12 text-gray-800"
+    >
+      Featured Work
+    </motion.h2>
+    
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {projects.map((project, index) => (
+        <motion.div
+          key={project.id}
+          initial={{ opacity: 0, y: 30, scale: 0.95 }}
+          animate={{
+            opacity: activeSection === 'projects' ? 1 : 0,
+            y: activeSection === 'projects' ? 0 : 30,
+            scale: activeSection === 'projects' ? 1 : 0.95
+          }}
+          transition={{ 
+            delay: index * 0.15,
+            type: "spring", 
+            stiffness: 100 
+          }}
+          className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow"
+        >
+          <div className="mb-4">
+            <h3 className="text-xl font-bold text-gray-800">{project.title}</h3>
+            <p className="text-sm text-gray-500 mt-1">{project.tech}</p>
           </div>
-        </section>
+          <p className="text-gray-600">{project.description}</p>
+          <button className="mt-4 text-blue-600 hover:text-blue-800 font-medium">
+            View Case Study →
+          </button>
+        </motion.div>
+      ))}
+    </div>
+  </div>
+</section>
 
-        {/* Contact Section */}
         <section id="contact" className="h-screen flex items-center justify-center bg-white text-white">
           <div className="text-center">
             <h2 className="text-4xl font-bold mb-4">Let's Connect!</h2>

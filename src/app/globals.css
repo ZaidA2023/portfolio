@@ -150,3 +150,11 @@ h1 {
   transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
 }
+
+.project-card {
+  transition: box-shadow 0.3s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+}
